@@ -9,6 +9,8 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
+//use yii\helpers\Html;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -25,36 +27,16 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
-    NavBar::end();
-    ?>
+    <div class="container">
+        <div class="row">
+            <?php echo $form = Html::beginForm(['site/repo'], 'get', ['class' => 'form-inline pull-right']); ?>
+            <div class="form-group">
+                <?= Html::textInput('search', '', ['class' => 'form-control']);/*->label(false) */ ?>
+            </div>
+            <?= Html::submitButton('POST', ['class' => 'btn btn-primary']) ?>
+            <?php Html::endForm() ?>
+        </div>
+    </div>
 
     <div class="container">
         <?= Breadcrumbs::widget([
@@ -66,9 +48,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left">&copy; Test MobiDev <?= date('Y') ?></p>
     </div>
 </footer>
 

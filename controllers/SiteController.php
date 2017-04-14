@@ -8,6 +8,9 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\httpclient\Client;
+use app\helpers\GitHubApi;
+use yii\helpers\Url;
 
 class SiteController extends Controller
 {
@@ -58,9 +61,85 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionRepo()
     {
-        return $this->render('index');
+        $repos = array(
+            "status_ok"=> true,
+            "full_name"=> "yiisoft/yii",
+            "description"=>  "Yii PHP Framework 1.1.x",
+            "watchers_count"=> 4745,
+            "forks_count"=> 2083,
+            "open_issues_count"=> 5,
+            "homepage"=> "http://www.yiiframework.com",
+            "html_url"=> "https://github.com/yiisoft/yii",
+            "created_at"=> "2012-02-15T16:26:22Z"
+        );
+//        var_dump(Url::to(['site/repo', 'id' => 'ddsds/wfewf'])); die;
+        $repoName = Yii::$app->request->get('id');
+        var_dump($repoName);
+//        die($userId);
+        if(is_null($repoName)){
+//            $repos = GitHubApi::getRepo(GitHubApi::$baseRepo);
+            $contributors = array();//GitHubApi::getContributors('yiisoft/yii');
+        } else {
+            $repos = GitHubApi::getRepo($repoName);
+            $contributors = GitHubApi::getContributors($repoName);
+        }
+
+        return $this->render('index', [
+            'repos' => $repos,
+            'contributors' => $contributors
+        ]);
+    }
+
+    /**
+     * Displays homepage.
+     *
+     * @return string
+     */
+    public function actionSearch()
+    {
+//        $repos = array(
+//            "status_ok"=> true,
+//            "full_name"=> "yiisoft/yii",
+//            "description"=>  "Yii PHP Framework 1.1.x",
+//            "watchers_count"=> 4745,
+//            "forks_count"=> 2083,
+//            "open_issues_count"=> 5,
+//            "homepage"=> "http://www.yiiframework.com",
+//            "html_url"=> "https://github.com/yiisoft/yii",
+//            "created_at"=> "2012-02-15T16:26:22Z"
+//        );
+//        var_dump(Url::to(['site/repo', 'id' => 'ddsds/wfewf'])); die;
+        $repoName = Yii::$app->request->get('search');
+        var_dump($repoName);
+//        die($userId);
+        if(is_null($repoName)){
+//            $repos = GitHubApi::getRepo(GitHubApi::$baseRepo);
+            $contributors = array();//GitHubApi::getContributors('yiisoft/yii');
+        } else {
+            $repos = GitHubApi::getRepo($repoName);
+            $contributors = GitHubApi::getContributors($repoName);
+        }
+
+        return $this->render('index', [
+            'repos' => $repos,
+            'contributors' => $contributors
+        ]);
+    }
+
+    /**
+     * Displays homepage.
+     *
+     * @return string
+     */
+    public function actionUser()
+    {
+        $userId = Yii::$app->request->get('id');
+        $res = GitHubApi::getUser($userId);
+        return $this->render('user', [
+            'repo' => $res,
+        ]);
     }
 
     /**

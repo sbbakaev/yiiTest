@@ -38,16 +38,17 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'site/user/<id:\w+>' => 'site/user',
+                'site/repo/<id:\w+>' => 'site/repo',
             ],
         ],
-        */
     ],
     'params' => $params,
+    'defaultRoute' => 'site/repo'
 ];
 
 if (YII_ENV_DEV) {
