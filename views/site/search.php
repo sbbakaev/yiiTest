@@ -1,8 +1,8 @@
 <?php
-
-/* @var $this yii\web\View */
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
+
+/* @var $this yii\web\View */
 
 $this->title = Yii::$app->name;
 ?>

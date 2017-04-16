@@ -63,7 +63,7 @@ $repo = $response['data'];
             <?php if ($contributor): ?>
                 <div class="row highlight">
                     <div class="col-xs-8"><a
-                            href="<?php echo $contributor->getHtmlUrl(); ?>"><?php echo $contributor->getLogin(); ?></a>
+                        href="<?php echo Url::to(['site/user', 'id' => $contributor->getLogin()]); ?>"><?php echo $contributor->getLogin(); ?></a>
                     </div>
                     <div class="col-xs-4">
                         <button id="<?php echo $contributor->getLogin(); ?>"

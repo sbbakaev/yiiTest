@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 
@@ -12,9 +13,12 @@ $user = $response['data'];
             <div class="col-md-12">
                 <img src="<?php echo $user->getAvataUrl(); ?>" class="img-rounded" alt="Cinque Terre" width="150">
             </div>
-            &nbsp;
-            <div class="col-md-offset-3 col-md-2">
-                <button class="btn btn-default" type="button"><?php echo $user->getStatusText(); ?></button>
+            <div class="clearfix"></div>
+            <br>
+            <div class="col-md-offset-7 col-md-2">
+                <button id="<?php echo $user->getLogin(); ?>"
+                        class="btn btn-default btn-sm btn-status pull-right"
+                        type="button"><?php echo $user->getStatusText(); ?></button>
             </div>
         </div>
         <div class="col-md-7">
@@ -30,4 +34,23 @@ $user = $response['data'];
             <strong>Error!</strong> <?php echo $response['message'] ?>
         </div>
     <?php endif; ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('.btn-status').on('click', function () {
+                var login = $(this).attr('id');
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    data: {login: login},
+                    url: <?php echo '"' . Url::to(['site/change-user-status']) . '"' ?>,
+                    success: function (response) {
+                        $('#' + login).text(response.label);
+                    },
+                    error: function () {
+                        console.log('failure');
+                    }
+                });
+            });
+        });
+    </script>
 </div>

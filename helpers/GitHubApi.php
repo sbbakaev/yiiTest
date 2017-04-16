@@ -95,7 +95,7 @@ class GitHubApi
             $data = $response->getData();
             $model = self::fillRepoModel($data);
             $owner = null;
-            if (array_key_exists('owner', $repo) && !empty($repo['owner'])){
+            if (array_key_exists('owner', $data) && !empty($data['owner'])){
                 $owner = self::fillUserModel($data['owner']);
             }
             $model->setOwner($owner);

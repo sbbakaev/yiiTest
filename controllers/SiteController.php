@@ -73,7 +73,7 @@ class SiteController extends Controller
             $contributors = GitHubApi::getContributors($repoName);
         }
         return $this->render('index', [
-            '$response' => $response,
+            'response' => $response,
             'contributors' => $contributors
         ]);
     }
