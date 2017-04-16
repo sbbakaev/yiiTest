@@ -9,7 +9,7 @@ $user = $response['data'];
 ?>
 <div class="row">
     <?php if ($response['status_ok'] && $user): ?>
-        <div class="col-md-offset-1 col-md-2">
+        <div class="col-md-2">
             <div class="col-md-12">
                 <img src="<?php echo $user->getAvataUrl(); ?>" class="img-rounded" alt="Cinque Terre" width="150">
             </div>
@@ -21,7 +21,7 @@ $user = $response['data'];
                         type="button"><?php echo $user->getStatusText(); ?></button>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-8">
             <h1><?php echo $user->getName(); ?></h1>
             <br>
             <h4><?php echo 'Company: ' . $user->getCompany(); ?></h4>

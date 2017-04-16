@@ -9,7 +9,7 @@ $repo = $response['data'];
 ?>
 <div class="row">
     <?php if ($response['status_ok'] && $repo): ?>
-        <div class="col-md-offset-1 col-md-5">
+        <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12">
                     <h1><?php echo $repo->getFullName(); ?></h1>
@@ -56,7 +56,7 @@ $repo = $response['data'];
             <strong>Error!</strong> <?php echo $response['message'] ?>
         </div>
     <?php endif; ?>
-    <div class="col-md-5">
+    <div class="col-md-6">
         <?php if ($contributors && $contributors['status_ok']): ?>
         <h1>Contributors:</h1>
         <?php foreach ($contributors['contributors'] as $contributor): ?>
@@ -74,7 +74,6 @@ $repo = $response['data'];
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
-    <div class="col-md-1"></div>
     <?php else: ?>
         <div class="alert alert-danger">
             <strong>Error!</strong> <?php echo $contributors['message'] ?>

@@ -28,16 +28,21 @@ AppAsset::register($this);
 
 <div class="wrap">
     <div class="menu-top">
-    <div class="container">
-        <div class="row">
-            <?php echo $form = Html::beginForm(['site/search'], 'get', ['class' => 'form-inline pull-right']); ?>
-            <div class="form-group">
-                <?= Html::textInput('search', '', ['class' => 'form-control']);/*->label(false) */ ?>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        <a href="<?php echo Yii::$app->homeUrl; ?>"> Homepage</a>
+                        <?php echo $form = Html::beginForm(['site/search'], 'get', ['class' => 'form-inline pull-right']); ?>
+                        <div class="form-group">
+                            <?= Html::textInput('search', '', ['class' => 'form-control']); ?>
+                        </div>
+                        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+                        <?php Html::endForm() ?>
+                    </h1>
+                </div>
             </div>
-            <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-            <?php Html::endForm() ?>
         </div>
-    </div>
     </div>
     <div class="container">
         <?= Breadcrumbs::widget([
