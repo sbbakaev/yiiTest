@@ -4,7 +4,7 @@
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
 
-$this->title = 'My Yii Application';
+$this->title = Yii::$app->name;
 ?>
 <div class="row">
     <div class="col-md-12">

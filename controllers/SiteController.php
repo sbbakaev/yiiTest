@@ -105,11 +105,11 @@ class SiteController extends Controller
      */
     public function actionUser()
     {
-        $userId = Yii::$app->request->get('id');
-        $res = GitHubApi::getUser($userId);
+        $login = Yii::$app->request->get('id');
+        $res = GitHubApi::getUser($login);
 
         return $this->render('user', [
-            'repo' => $res,
+            'response' => $res,
         ]);
     }
 

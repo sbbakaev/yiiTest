@@ -49,7 +49,8 @@ $config = [
         ],
     ],
     'params' => $params,
-    'defaultRoute' => 'site/repo'
+    'defaultRoute' => 'site/repo',
+    'name' => 'MobiDev is cool ;)',
 ];
 
 if (YII_ENV_DEV) {

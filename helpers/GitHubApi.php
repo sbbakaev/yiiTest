@@ -45,22 +45,21 @@ class GitHubApi
      */
     public static function getUser($login)
     {
-        $client = self::getClient();
+        $client   = self::getClient();
         $response = $client->createRequest()
             ->setUrl('users/' . $login)
             ->addHeaders(['User-Agent' => 'Awesome-Octocat-App'])
             ->send();
         $res = '';
         if ($response->isOk) {
-            $res['status_ok'] = true;
             $data = $response->getData();
-            foreach (self::$fieldsConf['user'] as $value) {
-                $res[$value] = array_key_exists($value, $data) ? $data[$value] : '';
-            }
+            $res['status_ok'] = true;
+            $res['data'] = self::fillUserModel($data);
         } else {
             $data = $response->getData();
             $res['status_ok'] = false;
             $res['message'] = $data['message'];
+            $res['data'] = null;
         }
 
         return $res;
