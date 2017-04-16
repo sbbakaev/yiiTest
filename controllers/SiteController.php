@@ -2,17 +2,15 @@
 
 namespace app\controllers;
 
-use app\models\UserLikeStatus;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use yii\httpclient\Client;
+use app\models\UserLikeStatus;
 use app\helpers\GitHubApi;
-use yii\helpers\Url;
-use yii\data\Pagination;
 
 class SiteController extends Controller
 {
@@ -119,7 +117,7 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionChangeStatus()
+    public function actionChangeUserStatus()
     {
         if (Yii::$app->request->isAjax) {
             $data = Yii::$app->request->post();

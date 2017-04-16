@@ -1,5 +1,4 @@
 <?php
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
@@ -67,31 +66,6 @@ $this->title = 'My Yii Application';
                     </div>
                     <div class="col-xs-4">
                         <button id="<?php echo $contributor->getLogin();?>" class="btn btn-default btn-sm btn-status pull-right" type="button"><?php echo $contributor->getStatusText(); ?></button>
-<!--                        --><?php
-//                        $login = $contributor->getLogin();
-//                        echo Html::button('Like', [
-//                            'title' => 'Ajax Title',
-//                            'onclick'=>"
-//                                $.ajax({
-//                                    type     :'POST',
-//                                    cache    : false,
-//                                    data: {login: $login},
-//                                    url  : '".Url::to(['site/change-status'])."',
-//                                    success  : function(response) {
-//                                    $(this).text(response.label);
-////                                            console.log(this);
-//                                    },
-//                                    error: function(){
-//                                      console.log('failure');
-//                                    }
-//                                    });
-//                                    return false;",
-//                            'class'=>"btn btn-default btn-sm btn-status pull-right",
-////                            'type'=>"button",
-//                            'id'=>"$login"
-//                        ]);
-//                        ?>
-
                     </div>
                 </div>
             <?php endif; ?>
@@ -111,7 +85,7 @@ $this->title = 'My Yii Application';
                     type     :'POST',
                     cache    : false,
                     data: {login: login},
-                    url  : <?php echo '"'.Url::to(['site/change-status']).'"' ?>,
+                    url  : <?php echo '"'.Url::to(['site/change-user-status']).'"' ?>,
 
                 success  : function(response) {
                     $('#'+login).text(response.label);
