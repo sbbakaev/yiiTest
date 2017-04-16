@@ -12,6 +12,7 @@ use app\models\ContactForm;
 use yii\httpclient\Client;
 use app\helpers\GitHubApi;
 use yii\helpers\Url;
+use yii\data\Pagination;
 
 class SiteController extends Controller
 {
@@ -64,19 +65,8 @@ class SiteController extends Controller
      */
     public function actionRepo()
     {
-        $repos = array(
-            "status_ok"=> true,
-            "full_name"=> "yiisoft/yii",
-            "description"=>  "Yii PHP Framework 1.1.x",
-            "watchers_count"=> 4745,
-            "forks_count"=> 2083,
-            "open_issues_count"=> 5,
-            "homepage"=> "http://www.yiiframework.com",
-            "html_url"=> "https://github.com/yiisoft/yii",
-            "created_at"=> "2012-02-15T16:26:22Z"
-        );
         $repoName = Yii::$app->request->get('id');
-        if(is_null($repoName)){
+        if (is_null($repoName)) {
             $repos = GitHubApi::getRepo(GitHubApi::$baseRepo);
             $contributors = GitHubApi::getContributors('yiisoft/yii');
         } else {
@@ -96,11 +86,16 @@ class SiteController extends Controller
      */
     public function actionSearch()
     {
-        $query = Yii::$app->request->get('search');
-        $repos = GitHubApi::findRepo($query);
+        $currentPage = Yii::$app->request->get('page') ? Yii::$app->request->get('page') : 1;
+        $query       = Yii::$app->request->get('search');
+
+        $repos = GitHubApi::findRepo($query, $currentPage);
+        $pages = new Pagination(['totalCount' => $repos['total_count'], 'pageSize' => 20]);
+        $pages->pageSizeParam = false;
 
         return $this->render('search', [
             'repos' => $repos,
+            'pages' => $pages,
         ]);
     }
 
@@ -140,15 +135,14 @@ class SiteController extends Controller
 
             $model->save();
 
-            $text = $model->status?'Unlike':'Like';
+            $text = $model->status ? 'Unlike' : 'Like';
             $response = Yii::$app->response;
             $response->format = \yii\web\Response::FORMAT_JSON;
             $response->data = ['label' => $text];
             $response->statusCode = 200;
 
             return $response;
-        }
-        else throw new \yii\web\BadRequestHttpException;
+        } else throw new \yii\web\BadRequestHttpException;
     }
 
     /**

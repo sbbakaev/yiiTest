@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
+use yii\widgets\LinkPager;
 
 $this->title = 'My Yii Application';
 ?>
@@ -9,9 +10,21 @@ $this->title = 'My Yii Application';
         <h1>For search term "<?php echo($repos['query']); ?>" found</h1>
     </div>
 </div>
+<?php
+    $paginationLinks =  LinkPager::widget([
+        'pagination'     => $pages,
+        'firstPageLabel' => '<<',
+        'lastPageLabel'  => '>>',
+        'prevPageLabel'  => '<',
+        'nextPageLabel'  => '>',
+        'maxButtonCount' => '3',
+    ]);
+
+    echo $paginationLinks;
+?>
+
 <?php foreach ($repos['repos'] as $repo): ?>
     <div class="row highlight">
-
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-2">
@@ -38,8 +51,6 @@ $this->title = 'My Yii Application';
                     <?php echo "Forks: " . $repo['forks_count'] ?>
                 </div>
                 <div class="col-md-4">
-                    <!--                    <a href=-->
-                    <?php //echo '"' . $repo['html_url'] . '">' . $repo['name'] ?><!--</a>-->
                     <button
                         id="<?php echo $repo['name']; ?>"
                         class="btn btn-default btn-sm btn-status pull-right"
@@ -47,16 +58,9 @@ $this->title = 'My Yii Application';
                 </div>
             </div>
         </div>
-        <!--        <div class="col-md-2">-->
-        <!--            <div class="row">-->
-        <!--                -->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--    </div>-->
-
-        <!--    <div class="col-md-offset-2  col-md-8 highlight">-->
-        <!--                    <h4>--><?php //echo 'Created at: ' . $repo['full_name'] ?><!--</h4>-->
-        <!--    </div>-->
-        <!--        </div>-->
     </div>
 <?php endforeach; ?>
+
+<?php
+    echo $paginationLinks;
+?>

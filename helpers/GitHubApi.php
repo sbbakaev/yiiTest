@@ -172,12 +172,18 @@ class GitHubApi
 
     }
 
-    public static function findRepo($query)
+    public static function findRepo($query, $page)
     {
         $client = self::getClient();
         $response = $client->createRequest()
             ->setUrl('search/repositories')
-            ->setData(['q' => $query, 'sort' => 'stars', 'order' => 'desc'])
+            ->setData([
+                'q'        => $query,
+                'page'     => $page,
+                'per_page' => 20,
+                'sort'     => 'stars',
+                'order'    => 'desc'
+            ])
             ->addHeaders(['User-Agent' => 'Awesome-Octocat-App'])
             ->send();
         $res['query'] = $query;
@@ -185,6 +191,7 @@ class GitHubApi
             $res['status_ok'] = true;
             $data = $response->getData();
             if (count($data) > 0) {
+                $res['total_count'] = $data['total_count'];
                 foreach ($data['items'] as $key => $repo) {
                     foreach (self::$fieldsConf['repo'] as $value) {
                         if ($value === 'owner') {
