@@ -4,7 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-use app\models\UserLike;
+use app\models\UserLikeStatus;
 
 
 class Owner extends Model
@@ -194,7 +194,7 @@ class Owner extends Model
     private function getLikeByLogin($login)
     {
         if (!empty($login)) {
-            $model = UserLike::find()->where(['login' => $login])->one();
+            $model = UserLikeStatus::find()->where(['login' => $login])->one();
             if ($model) {
                 return $model->status;
             } else {

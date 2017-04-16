@@ -3,7 +3,7 @@ namespace app\helpers;
 
 use app\models\Owner;
 use yii\httpclient\Client;
-use app\models\UserLike;
+use app\models\UserLikeStatus;
 
 class GitHubApi
 {

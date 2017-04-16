@@ -11,7 +11,7 @@ use Yii;
  * @property string $login
  * @property integer $status
  */
-class UserLike extends \yii\db\ActiveRecord
+class UserLikeStatus extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

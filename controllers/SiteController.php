@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\UserLike;
+use app\models\UserLikeStatus;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -124,11 +124,11 @@ class SiteController extends Controller
         if (Yii::$app->request->isAjax) {
             $data = Yii::$app->request->post();
             $login = $data['login'];
-            $model = UserLike::find()->where(['login' => $login])->one();
+            $model = UserLikeStatus::find()->where(['login' => $login])->one();
             if ($model) {
                 $model->status = $model->status ? 0 : 1;
             } else {
-                $model = new UserLike();
+                $model = new UserLikeStatus();
                 $model->login = $login;
                 $model->status = true;
             }
