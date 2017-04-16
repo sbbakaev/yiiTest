@@ -12,16 +12,16 @@ $this->title = 'My Yii Application';
     </div>
 </div>
 <?php
-    $paginationLinks =  LinkPager::widget([
-        'pagination'     => $pages,
-        'firstPageLabel' => '<<',
-        'lastPageLabel'  => '>>',
-        'prevPageLabel'  => '<',
-        'nextPageLabel'  => '>',
-        'maxButtonCount' => '3',
-    ]);
+$paginationLinks = LinkPager::widget([
+    'pagination'     => $pages,
+    'firstPageLabel' => '<<',
+    'lastPageLabel'  => '>>',
+    'prevPageLabel'  => '<',
+    'nextPageLabel'  => '>',
+    'maxButtonCount' => '3',
+]);
 
-    echo $paginationLinks;
+echo $paginationLinks;
 ?>
 
 <?php foreach ($repos['repos'] as $repo): ?>
@@ -29,32 +29,36 @@ $this->title = 'My Yii Application';
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-5">
-                    View repo detail: <a href=<?php echo '"' . Url::to(['site/repo', 'id' => $repo['full_name']]) . '">' . $repo['name'] ?></a>
+                    <?php /** @var app\models\Repo $repo */ ?>
+                    View repo detail: <a
+                        href=<?php echo '"' . Url::to(['site/repo', 'id' => $repo->getFullName()]) . '">' . $repo->getName(); ?></a>
                 </div>
                 <div class="col-md-3">
-                    <a href=<?php echo '"' . $repo['owner']['blog'] . '">' . $repo['owner']['blog'] ?></a>
+                    <a href=<?php echo '"' . $repo->getOwner()->getBlog() . '">' . $repo->getOwner()->getBlog(); ?></a>
                 </div>
                 <div class="col-md-4">
-                    View user detail: <a href=<?php echo '"' . Url::to(['site/user', 'id' => $repo['owner']['login']]) . '">' . $repo['owner']['login'] ?></a>
+                    View user detail: <a
+                        href=<?php echo '"' . Url::to(['site/user', 'id' => $repo->getOwner()->getLogin()]) . '">' . $repo->getOwner()->getLogin(); ?></a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <?php echo "Description: " . $repo['description'] ?>
+                    <?php echo "Description: " . $repo->getDescription(); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <?php echo "Watchers: " . $repo['watchers_count'] ?>
+                    <?php echo "Watchers: " . $repo->getWatchersCount(); ?>
                 </div>
                 <div class="col-md-4">
-                    <?php echo "Forks: " . $repo['forks_count'] ?>
+                    <?php echo "Forks: " . $repo->getForksCount(); ?>
                 </div>
                 <div class="col-md-4">
                     <button
-                        id="<?php echo $repo['name']; ?>"
+                        id="<?php echo $repo->getName(); ?>"
                         class="btn btn-default btn-sm btn-status pull-right"
-                        type="button">Like</button>
+                        type="button">Like
+                    </button>
                 </div>
             </div>
         </div>
@@ -62,5 +66,5 @@ $this->title = 'My Yii Application';
 <?php endforeach; ?>
 
 <?php
-    echo $paginationLinks;
+echo $paginationLinks;
 ?>

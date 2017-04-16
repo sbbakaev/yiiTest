@@ -2,8 +2,8 @@
 namespace app\helpers;
 
 use app\models\Owner;
+use app\models\Repo;
 use yii\httpclient\Client;
-use app\models\UserLikeStatus;
 
 class GitHubApi
 {
@@ -22,7 +22,7 @@ class GitHubApi
             'html_url',
         ),
         'repo' => array(
-//            'id',
+            'id',
             'full_name',
             'name',
             'description',
@@ -161,6 +161,25 @@ class GitHubApi
 
     }
 
+    private static function fillRepoModel($data)
+    {
+        $model = new Repo();
+        $model->setRepoId(self::checkValue($data, 'id'));
+        $model->setFullName(self::checkValue($data, 'full_name'));
+        $model->setName(self::checkValue($data, 'name'));
+        $model->setDescription(self::checkValue($data, 'description'));
+        $model->setWatchersCount(self::checkValue($data, 'watchers_count'));
+        $model->setForksCount(self::checkValue($data, 'forks_count'));
+        $model->setOpenIssuesCount(self::checkValue($data, 'open_issues_count'));
+        $model->setHomepage(self::checkValue($data, 'homepage'));
+        $model->setHtmlUrl(self::checkValue($data, 'html_url'));
+        $model->setCreatedAt(self::checkValue($data, 'created_at'));
+        $model->setOwner(self::checkValue($data, 'owner'));
+
+        return $model;
+
+    }
+
     /**
      * @param $data
      * @param $key
@@ -193,15 +212,13 @@ class GitHubApi
             if (count($data) > 0) {
                 $res['total_count'] = $data['total_count'];
                 foreach ($data['items'] as $key => $repo) {
-                    foreach (self::$fieldsConf['repo'] as $value) {
-                        if ($value === 'owner') {
-                            foreach (self::$fieldsConf['user'] as $item) {
-                                $res['repos'][$key][$value][$item] = array_key_exists($item, $repo[$value]) ? $repo[$value][$item] : '';
-                            }
-                        } else {
-                            $res['repos'][$key][$value] = array_key_exists($value, $repo) ? $repo[$value] : '';
-                        }
+                    $model = self::fillRepoModel($repo);
+                    $owner = null;
+                    if (array_key_exists('owner', $repo) && !empty($repo['owner'])){
+                        $owner = self::fillUserModel($repo['owner']);
                     }
+                    $model->setOwner($owner);
+                    $res['repos'][$key] = $model;
                 }
             } else {
                 $res['repos'][] = null;

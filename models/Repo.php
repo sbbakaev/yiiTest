@@ -4,19 +4,22 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-use app\models\UserLikeStatus;
+use app\models\RepoLikeStatus;
 
 
-class Owner extends Model
+class Repo extends Model
 {
-    public $id;
-    public $login;
+    public $repoId;
+    public $fullName;
     public $name;
-    public $avataUrl;
-    public $company;
-    public $blog;
-    public $followers;
+    public $description;
+    public $watchersCount;
+    public $forksCount;
+    public $openIssuesCount;
+    public $homepage;
     public $htmlUrl;
+    public $createdAt;
+    public $owner;
     public $likeStatus = null;
 
     /**
@@ -33,33 +36,33 @@ class Owner extends Model
     /**
      * @return mixed
      */
-    public function getId()
+    public function getRepoId()
     {
-        return $this->id;
+        return $this->repoId;
     }
 
     /**
-     * @param mixed $id
+     * @param mixed $repoId
      */
-    public function setId($id)
+    public function setRepoId($id)
     {
-        $this->id = $id;
+        $this->repoId = $id;
     }
 
     /**
      * @return mixed
      */
-    public function getLogin()
+    public function getFullName()
     {
-        return $this->login;
+        return $this->fullName;
     }
 
     /**
-     * @param mixed $login
+     * @param mixed $fullName
      */
-    public function setLogin($login)
+    public function setFullName($fullName)
     {
-        $this->login = $login;
+        $this->fullName = $fullName;
     }
 
     /**
@@ -81,65 +84,81 @@ class Owner extends Model
     /**
      * @return mixed
      */
-    public function getAvataUrl()
+    public function getDescription()
     {
-        return $this->avataUrl;
+        return $this->description;
     }
 
     /**
-     * @param mixed $avataUrl
+     * @param mixed $description
      */
-    public function setAvataUrl($avataUrl)
+    public function setDescription($description)
     {
-        $this->avataUrl = $avataUrl;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCompany()
-    {
-        return $this->company;
-    }
-
-    /**
-     * @param mixed $company
-     */
-    public function setCompany($company)
-    {
-        $this->company = $company;
+        $this->description = $description;
     }
 
     /**
      * @return mixed
      */
-    public function getBlog()
+    public function getWatchersCount()
     {
-        return $this->blog;
+        return $this->watchersCount;
     }
 
     /**
-     * @param mixed $blog
+     * @param mixed $watchersCount
      */
-    public function setBlog($blog)
+    public function setWatchersCount($watchersCount)
     {
-        $this->blog = $blog;
+        $this->watchersCount = $watchersCount;
     }
 
     /**
      * @return mixed
      */
-    public function getFollowers()
+    public function getForksCount()
     {
-        return $this->followers;
+        return $this->forksCount;
     }
 
     /**
-     * @param mixed $followers
+     * @param mixed $forksCount
      */
-    public function setFollowers($followers)
+    public function setForksCount($forksCount)
     {
-        $this->followers = $followers;
+        $this->forksCount = $forksCount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOpenIssuesCount()
+    {
+        return $this->openIssuesCount;
+    }
+
+    /**
+     * @param mixed $openIssuesCount
+     */
+    public function setOpenIssuesCount($openIssuesCount)
+    {
+        $this->openIssuesCount = $openIssuesCount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHomepage()
+    {
+        return $this->homepage;
+    }
+
+    /**
+     * @param mixed $homepage
+     */
+    public function setHomepage($homepage)
+    {
+        $this->homepage = $homepage;
     }
 
     /**
@@ -161,12 +180,44 @@ class Owner extends Model
     /**
      * @return mixed
      */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param mixed $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getLikeStatus()
     {
         if ($this->likeStatus !== null) {
             return $this->likeStatus;
         } else {
-            return $this->getLikeByLogin($this->login);
+            return $this->getLikeById($this->repoId);
         }
     }
 
@@ -191,10 +242,10 @@ class Owner extends Model
         $this->likeStatus = $like;
     }
 
-    private function getLikeByLogin($login)
+    private function getLikeById($id)
     {
-        if (!empty($login)) {
-            $model = UserLikeStatus::find()->where(['login' => $login])->one();
+        if (!empty($id)) {
+            $model = RepoLikeStatus::find()->where(['repo_id' => $id])->one();
             if ($model) {
                 return $model->status;
             } else {
@@ -203,5 +254,4 @@ class Owner extends Model
         }
         return false;
     }
-
 }
