@@ -18,7 +18,7 @@ class UserLike extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'repo_like_status';
+        return 'user_like_status';
     }
 
     /**

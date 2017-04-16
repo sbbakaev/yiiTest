@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `repo_like_status`.
+ * Handles the creation of table `user_like_status`.
  */
-class m170414_135422_create_repo_like_status_table extends Migration
+class m170414_135422_create_user_like_status_table extends Migration
 {
     /**
      * @inheritdoc
@@ -17,14 +17,14 @@ class m170414_135422_create_repo_like_status_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%repo_like_status}}', [
+        $this->createTable('{{%user_like_status}}', [
             'id' => $this->primaryKey(),
             'login' => $this->string()->notNull(),
             'status' => $this->smallInteger()->notNull()->defaultValue(0),
         ], $tableOptions);
 
-        $this->createIndex('idx_repo_like_status_name', '{{%repo_like_status}}', 'login');
-        $this->createIndex('idx_repo_like_status_status', '{{%repo_like_status}}', 'status');
+        $this->createIndex('idx_user_like_status_name', '{{%user_like_status}}', 'login');
+        $this->createIndex('idx_user_like_status_status', '{{%user_like_status}}', 'status');
     }
 
     /**
