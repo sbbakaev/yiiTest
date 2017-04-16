@@ -30,15 +30,15 @@ echo $paginationLinks;
             <div class="row">
                 <div class="col-md-5">
                     <?php /** @var app\models\Repo $repo */ ?>
-                    View repo detail: <a
-                        href=<?php echo '"' . Url::to(['site/repo', 'id' => $repo->getFullName()]) . '">' . $repo->getName(); ?></a>
+                    View repo detail:
+                    <a href=<?php echo '"' . Url::to(['site/repo', 'id' => $repo->getFullName()]) . '">' . $repo->getName(); ?></a>
                 </div>
                 <div class="col-md-3">
                     <a href=<?php echo '"' . $repo->getOwner()->getBlog() . '">' . $repo->getOwner()->getBlog(); ?></a>
                 </div>
                 <div class="col-md-4">
-                    View user detail: <a
-                        href=<?php echo '"' . Url::to(['site/user', 'id' => $repo->getOwner()->getLogin()]) . '">' . $repo->getOwner()->getLogin(); ?></a>
+                    View user detail:
+                    <a href=<?php echo '"' . Url::to(['site/user', 'id' => $repo->getOwner()->getLogin()]) . '">' . $repo->getOwner()->getLogin(); ?></a>
                 </div>
             </div>
             <div class="row">
@@ -55,9 +55,9 @@ echo $paginationLinks;
                 </div>
                 <div class="col-md-4">
                     <button
-                        id="<?php echo $repo->getName(); ?>"
+                        id="<?php echo $repo->getRepoId(); ?>"
                         class="btn btn-default btn-sm btn-status pull-right"
-                        type="button">Like
+                        type="button"><?php echo $repo->getStatusText(); ?>
                     </button>
                 </div>
             </div>
@@ -68,3 +68,22 @@ echo $paginationLinks;
 <?php
 echo $paginationLinks;
 ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('.btn-status').on('click', function () {
+            var repo_id = $(this).attr('id');
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                data: {repo_id: repo_id},
+                url: <?php echo '"' . Url::to(['site/change-repo-status']) . '"' ?>,
+                success: function (response) {
+                    $('#' + repo_id).text(response.label);
+                },
+                error: function () {
+                    console.log('failure');
+                }
+            });
+        });
+    });
+</script>

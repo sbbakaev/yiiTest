@@ -54,7 +54,6 @@ $this->title = 'My Yii Application';
             <strong>Error!</strong> <?php echo $repos['message'] ?>
         </div>
     <?php endif; ?>
-<!--            --><?php //var_dump($contributors); die;?>
     <div class="col-md-5">
         <?php if ($contributors && $contributors['status_ok']): ?>
         <h1>Contributors:</h1>
@@ -65,36 +64,36 @@ $this->title = 'My Yii Application';
                             href="<?php echo $contributor->getHtmlUrl(); ?>"><?php echo $contributor->getLogin(); ?></a>
                     </div>
                     <div class="col-xs-4">
-                        <button id="<?php echo $contributor->getLogin();?>" class="btn btn-default btn-sm btn-status pull-right" type="button"><?php echo $contributor->getStatusText(); ?></button>
+                        <button id="<?php echo $contributor->getLogin(); ?>"
+                                class="btn btn-default btn-sm btn-status pull-right"
+                                type="button"><?php echo $contributor->getStatusText(); ?></button>
                     </div>
                 </div>
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
     <div class="col-md-1"></div>
-<?php else: ?>
-    <div class="alert alert-danger">
-        <strong>Error!</strong> <?php echo $contributors['message'] ?>
-    </div>
-<?php endif; ?>
+    <?php else: ?>
+        <div class="alert alert-danger">
+            <strong>Error!</strong> <?php echo $contributors['message'] ?>
+        </div>
+    <?php endif; ?>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $('.btn-status').on('click', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            $('.btn-status').on('click', function () {
                 var login = $(this).attr('id');
                 $.ajax({
-                    type     :'POST',
-                    cache    : false,
+                    type: 'POST',
+                    cache: false,
                     data: {login: login},
-                    url  : <?php echo '"'.Url::to(['site/change-user-status']).'"' ?>,
-
-                success  : function(response) {
-                    $('#'+login).text(response.label);
-                    console.log(response.label,this);
-                },
-                error: function(){
-                    console.log('failure');
-                }
-            });
+                    url: <?php echo '"' . Url::to(['site/change-user-status']) . '"' ?>,
+                    success: function (response) {
+                        $('#' + login).text(response.label);
+                    },
+                    error: function () {
+                        console.log('failure');
+                    }
+                });
             });
         });
     </script>
