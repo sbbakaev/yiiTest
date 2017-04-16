@@ -44,6 +44,7 @@ $config = [
             'rules' => [
                 'site/user/<id:\w+>' => 'site/user',
                 'site/repo/<id:\w+>' => 'site/repo',
+                'site/search/<id:\w+>' => 'site/search',
             ],
         ],
     ],

@@ -27,17 +27,18 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
+    <div class="menu-top">
     <div class="container">
         <div class="row">
-            <?php echo $form = Html::beginForm(['site/repo'], 'get', ['class' => 'form-inline pull-right']); ?>
+            <?php echo $form = Html::beginForm(['site/search'], 'get', ['class' => 'form-inline pull-right']); ?>
             <div class="form-group">
                 <?= Html::textInput('search', '', ['class' => 'form-control']);/*->label(false) */ ?>
             </div>
-            <?= Html::submitButton('POST', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
             <?php Html::endForm() ?>
         </div>
     </div>
-
+    </div>
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

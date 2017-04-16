@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\UserLike;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -74,18 +75,14 @@ class SiteController extends Controller
             "html_url"=> "https://github.com/yiisoft/yii",
             "created_at"=> "2012-02-15T16:26:22Z"
         );
-//        var_dump(Url::to(['site/repo', 'id' => 'ddsds/wfewf'])); die;
         $repoName = Yii::$app->request->get('id');
-        var_dump($repoName);
-//        die($userId);
         if(is_null($repoName)){
-//            $repos = GitHubApi::getRepo(GitHubApi::$baseRepo);
-            $contributors = array();//GitHubApi::getContributors('yiisoft/yii');
+            $repos = GitHubApi::getRepo(GitHubApi::$baseRepo);
+            $contributors = GitHubApi::getContributors('yiisoft/yii');
         } else {
             $repos = GitHubApi::getRepo($repoName);
             $contributors = GitHubApi::getContributors($repoName);
         }
-
         return $this->render('index', [
             'repos' => $repos,
             'contributors' => $contributors
@@ -93,43 +90,22 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Displays search result page.
      *
      * @return string
      */
     public function actionSearch()
     {
-//        $repos = array(
-//            "status_ok"=> true,
-//            "full_name"=> "yiisoft/yii",
-//            "description"=>  "Yii PHP Framework 1.1.x",
-//            "watchers_count"=> 4745,
-//            "forks_count"=> 2083,
-//            "open_issues_count"=> 5,
-//            "homepage"=> "http://www.yiiframework.com",
-//            "html_url"=> "https://github.com/yiisoft/yii",
-//            "created_at"=> "2012-02-15T16:26:22Z"
-//        );
-//        var_dump(Url::to(['site/repo', 'id' => 'ddsds/wfewf'])); die;
-        $repoName = Yii::$app->request->get('search');
-        var_dump($repoName);
-//        die($userId);
-        if(is_null($repoName)){
-//            $repos = GitHubApi::getRepo(GitHubApi::$baseRepo);
-            $contributors = array();//GitHubApi::getContributors('yiisoft/yii');
-        } else {
-            $repos = GitHubApi::getRepo($repoName);
-            $contributors = GitHubApi::getContributors($repoName);
-        }
+        $query = Yii::$app->request->get('search');
+        $repos = GitHubApi::findRepo($query);
 
-        return $this->render('index', [
+        return $this->render('search', [
             'repos' => $repos,
-            'contributors' => $contributors
         ]);
     }
 
     /**
-     * Displays homepage.
+     * Displays user detail page.
      *
      * @return string
      */
@@ -137,9 +113,42 @@ class SiteController extends Controller
     {
         $userId = Yii::$app->request->get('id');
         $res = GitHubApi::getUser($userId);
+
         return $this->render('user', [
             'repo' => $res,
         ]);
+    }
+
+    /**
+     * ajax change status.
+     *
+     * @return string
+     */
+    public function actionChangeStatus()
+    {
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $login = $data['login'];
+            $model = UserLike::find()->where(['login' => $login])->one();
+            if ($model) {
+                $model->status = $model->status ? 0 : 1;
+            } else {
+                $model = new UserLike();
+                $model->login = $login;
+                $model->status = true;
+            }
+
+            $model->save();
+
+            $text = $model->status?'Unlike':'Like';
+            $response = Yii::$app->response;
+            $response->format = \yii\web\Response::FORMAT_JSON;
+            $response->data = ['label' => $text];
+            $response->statusCode = 200;
+
+            return $response;
+        }
+        else throw new \yii\web\BadRequestHttpException;
     }
 
     /**

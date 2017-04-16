@@ -113,3 +113,23 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.highlight {
+    padding: 9px 14px;
+    margin-bottom: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+}
+
+.menu-top {
+    background-color: #4cae4c;
+}
+
+.wrap > .container, .wrap > .menu-top {
+    padding: 40px 15px 20px;
+}
+
+.container .row {
+    padding-bottom: 10px;
+}
