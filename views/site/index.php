@@ -4,54 +4,56 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 
 $this->title = Yii::$app->name;
+/** @var app\models\Repo $repo */
+$repo = $response['data'];
 ?>
 <div class="row">
-    <?php if ($repos['status_ok']): ?>
+    <?php if ($response['status_ok'] && $repo): ?>
         <div class="col-md-offset-1 col-md-5">
             <div class="row">
                 <div class="col-md-12">
-                    <h1><?php echo $repos['full_name'] ?></h1>
+                    <h1><?php echo $repo->getFullName(); ?></h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h4><?php echo 'Description: ' . $repos['description'] ?></h4>
+                    <h4><?php echo 'Description: ' . $repo->getDescription(); ?></h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h4><?php echo 'Watchers: ' . $repos['watchers_count'] ?></h4>
+                    <h4><?php echo 'Watchers: ' . $repo->getWatchersCount(); ?></h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h4><?php echo 'Forks: ' . $repos['forks_count'] ?></h4>
+                    <h4><?php echo 'Forks: ' . $repo->getForksCount(); ?></h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h4><?php echo 'Open issues: ' . $repos['open_issues_count'] ?></h4>
+                    <h4><?php echo 'Open issues: ' . $repo->getOpenIssuesCount(); ?></h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h4>Homepage: <a href=<?php echo '"' . $repos['homepage'] . '">' . $repos['homepage'] ?></a></h4>
+                    <h4>Homepage: <a href=<?php echo '"' . $repo->getHomepage() . '">' . $repo->getHomepage(); ?></a></h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h4>GitHub repo: <a href=<?php echo '"' . $repos['html_url'] . '">' . $repos['html_url'] ?></a></h4>
+                    <h4>GitHub repo: <a href=<?php echo '"' . $repo->getHtmlUrl() . '">' . $repo->getHtmlUrl(); ?></a></h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h4><?php echo 'Created at: ' . $repos['created_at'] ?></h4>
+                    <h4><?php echo 'Created at: ' . $repo->getCreatedAt(); ?></h4>
                 </div>
             </div>
         </div>
     <?php else: ?>
         <div class="alert alert-danger">
-            <strong>Error!</strong> <?php echo $repos['message'] ?>
+            <strong>Error!</strong> <?php echo $response['message'] ?>
         </div>
     <?php endif; ?>
     <div class="col-md-5">

@@ -93,13 +93,18 @@ class GitHubApi
         if ($response->isOk) {
             $res['status_ok'] = true;
             $data = $response->getData();
-            foreach (self::$fieldsConf['repo'] as $value) {
-                $res[$value] = array_key_exists($value, $data) ? $data[$value] : '';
+            $model = self::fillRepoModel($data);
+            $owner = null;
+            if (array_key_exists('owner', $repo) && !empty($repo['owner'])){
+                $owner = self::fillUserModel($data['owner']);
             }
+            $model->setOwner($owner);
+            $res['data'] = $model;
         } else {
             $data = $response->getData();
             $res['status_ok'] = false;
             $res['message'] = $data['message'];
+            $res['data'] = null;
         }
         return $res;
     }

@@ -7,7 +7,7 @@ $this->title = Yii::$app->name;
 $user = $response['data'];
 ?>
 <div class="row">
-    <?php if ($response['status_ok']): ?>
+    <?php if ($response['status_ok'] && $user): ?>
         <div class="col-md-offset-1 col-md-2">
             <div class="col-md-12">
                 <img src="<?php echo $user->getAvataUrl(); ?>" class="img-rounded" alt="Cinque Terre" width="150">

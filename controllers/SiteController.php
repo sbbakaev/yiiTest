@@ -66,14 +66,14 @@ class SiteController extends Controller
     {
         $repoName = Yii::$app->request->get('id');
         if (is_null($repoName)) {
-            $repos = GitHubApi::getRepo(GitHubApi::$baseRepo);
+            $response = GitHubApi::getRepo(GitHubApi::$baseRepo);
             $contributors = GitHubApi::getContributors('yiisoft/yii');
         } else {
-            $repos = GitHubApi::getRepo($repoName);
+            $response = GitHubApi::getRepo($repoName);
             $contributors = GitHubApi::getContributors($repoName);
         }
         return $this->render('index', [
-            'repos' => $repos,
+            '$response' => $response,
             'contributors' => $contributors
         ]);
     }
@@ -106,10 +106,10 @@ class SiteController extends Controller
     public function actionUser()
     {
         $login = Yii::$app->request->get('id');
-        $res = GitHubApi::getUser($login);
+        $response = GitHubApi::getUser($login);
 
         return $this->render('user', [
-            'response' => $res,
+            'response' => $response,
         ]);
     }
 
