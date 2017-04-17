@@ -133,3 +133,7 @@ a.desc:after {
 .container .row {
     padding-bottom: 10px;
 }
+
+.container .row h1 {
+    word-wrap: break-word;
+}
