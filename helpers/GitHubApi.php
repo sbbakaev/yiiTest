@@ -37,6 +37,18 @@ class GitHubApi
     );
 
     /**
+     * @return null|Client
+     */
+    private static function getClient()
+    {
+        if (!self::$client) {
+            return new Client(['baseUrl' => self::$apiUrl]);
+        } else {
+            return self::$client;
+        }
+    }
+
+    /**
      * Return user data
      *
      * @param $login string GitHub user login
@@ -63,18 +75,6 @@ class GitHubApi
         }
 
         return $res;
-    }
-
-    /**
-     * @return null|Client
-     */
-    private static function getClient()
-    {
-        if (!self::$client) {
-            return new Client(['baseUrl' => self::$apiUrl]);
-        } else {
-            return self::$client;
-        }
     }
 
     /**

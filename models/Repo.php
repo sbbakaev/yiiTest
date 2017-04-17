@@ -9,18 +9,18 @@ use app\models\RepoLikeStatus;
 
 class Repo extends Model
 {
-    public $repoId;
-    public $fullName;
-    public $name;
-    public $description;
-    public $watchersCount;
-    public $forksCount;
-    public $openIssuesCount;
-    public $homepage;
-    public $htmlUrl;
-    public $createdAt;
-    public $owner;
-    public $likeStatus = null;
+    private $repoId;
+    private $fullName;
+    private $name;
+    private $description;
+    private $watchersCount;
+    private $forksCount;
+    private $openIssuesCount;
+    private $homepage;
+    private $htmlUrl;
+    private $createdAt;
+    private $owner;
+    private $likeStatus = null;
 
     /**
      * @return array the validation rules.

@@ -9,14 +9,14 @@ use app\models\UserLikeStatus;
 
 class Owner extends Model
 {
-    public $login;
-    public $name;
-    public $avataUrl;
-    public $company;
-    public $blog;
-    public $followers;
-    public $htmlUrl;
-    public $likeStatus = null;
+    private $login;
+    private $name;
+    private $avataUrl;
+    private $company;
+    private $blog;
+    private $followers;
+    private $htmlUrl;
+    private $likeStatus = null;
 
     /**
      * @return array the validation rules.
