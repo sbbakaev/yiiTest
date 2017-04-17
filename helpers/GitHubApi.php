@@ -225,7 +225,7 @@ class GitHubApi
                     $res['repos'][$key] = $model;
                 }
             } else {
-                $res['repos'][] = null;
+                $res['repos'] = null;
             }
 
         } else {

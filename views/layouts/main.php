@@ -31,7 +31,7 @@ AppAsset::register($this);
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>
+                    <h2>
                         <a href="<?php echo Yii::$app->homeUrl; ?>"> Homepage</a>
                         <?php echo $form = Html::beginForm(['site/search'], 'get', ['class' => 'form-inline pull-right']); ?>
                         <div class="form-group">
@@ -39,7 +39,7 @@ AppAsset::register($this);
                         </div>
                         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
                         <?php Html::endForm() ?>
-                    </h1>
+                    </h2>
                 </div>
             </div>
         </div>
